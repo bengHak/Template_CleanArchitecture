@@ -26,3 +26,8 @@ tuist generate
 2-1. Select a team from the "Signing & Capabilities" of the "ApplicationApp" target of the "ApplicationApp" project.
 2-2. Run "ApplicationApp" on a practical machine.
 ```
+
+## Reference 
+- https://github.com/minsOne/iOSApplicationTemplate
+- https://github.com/havilog/HaviTemplateApp
+- https://github.com/stripe/stripe-ios
