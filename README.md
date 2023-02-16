@@ -1,4 +1,5 @@
 # Tuist template(CleanArchitecture)
+> Tuist version: 3.15.0
 
 ## How to run
 
