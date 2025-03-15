@@ -26,16 +26,16 @@ public struct FrameworkFactory {
     public struct Payload {
         
         let name: String
-        let platform: Platform
+        let destinations: Destinations
         let product: Product
         
         public init(
             name: String,
-            platform: Platform,
+            destinations: Destinations,
             product: Product
         ) {
             self.name = name
-            self.platform = platform
+            self.destinations = destinations
             self.product = product
         }
     }
@@ -48,12 +48,12 @@ public struct FrameworkFactory {
     
     public func build(payload: Payload) -> [Target] {
         
-        let sourceTarget = Target(
+        let sourceTarget: Target = .target(
             name: payload.name,
-            platform: payload.platform,
+            destinations: payload.destinations,
             product: payload.product,
             bundleId: payload.name,
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTarget,
             infoPlist: .default,
             sources: ["Sources/**"],
             resources: ["Resources/**"],
@@ -61,19 +61,17 @@ public struct FrameworkFactory {
             dependencies: self.dependency.frameworkDependencies
         )
         
-        let testTarget = Target(
+        let testTarget: Target = .target(
             name: "\(payload.name)Tests",
-            platform: payload.platform,
+            destinations: payload.destinations,
             product: .unitTests,
             bundleId: payload.name + "Tests",
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTarget,
             infoPlist: .default,
             sources: ["Tests/**"],
             resources: [],
             dependencies: [
                 .target(name: payload.name),
-                .SPM.Quick,
-                .SPM.Nimble
             ] + self.dependency.unitTestsDependencies
         )
         

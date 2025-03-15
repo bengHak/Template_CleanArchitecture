@@ -7,11 +7,8 @@
 
 import ProjectDescription
 
-let iOSTargetVersion: String = "15.0"
-let deploymentTarget: DeploymentTarget = .iOS(
-    targetVersion: iOSTargetVersion,
-    devices: .iphone
-)
+let iOSTargetVersion: String = "17.0"
+let deploymentTarget: DeploymentTargets = .iOS(iOSTargetVersion)
 
 public struct AppFactory {
     
@@ -36,18 +33,18 @@ public struct AppFactory {
         
         let bundleID: String
         let name: String
-        let platform: Platform
-        let infoPlist: [String: InfoPlist.Value]
+        let destinations: Destinations
+        let infoPlist: [String: Plist.Value]
         
         public init(
             bundleID: String,
             name: String,
-            platform: Platform,
-            infoPlist: [String: InfoPlist.Value]
+            destinations: Destinations,
+            infoPlist: [String: Plist.Value]
         ) {
             self.bundleID = bundleID
             self.name = name
-            self.platform = platform
+            self.destinations = destinations
             self.infoPlist = infoPlist
         }
     }
@@ -60,12 +57,12 @@ public struct AppFactory {
     
     public func build(payload: Payload) -> [Target] {
         
-        let mainTarget = Target(
+        let mainTarget: Target = .target(
             name: payload.name,
-            platform: payload.platform,
+            destinations: payload.destinations,
             product: .app,
             bundleId: payload.bundleID,
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTarget,
             infoPlist: .extendingDefault(with: payload.infoPlist),
             sources: ["Sources/**"],
             resources: ["Resources/**"],
@@ -77,18 +74,16 @@ public struct AppFactory {
             ])
         )
         
-        let testTarget = Target(
+        let testTarget: Target = .target(
             name: "\(payload.name)Tests",
-            platform: payload.platform,
+            destinations: payload.destinations,
             product: .unitTests,
             bundleId: payload.bundleID,
-            deploymentTarget: deploymentTarget,
+            deploymentTargets: deploymentTarget,
             infoPlist: .default,
             sources: ["Tests/**"],
             dependencies: [
                 .target(name: payload.name),
-                .SPM.Quick,
-                .SPM.Nimble,
             ] + self.dependency.unitTestsDependencies
         )
         

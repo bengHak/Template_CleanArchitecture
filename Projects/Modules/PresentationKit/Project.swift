@@ -7,7 +7,6 @@
 
 import ProjectDescription
 import ProjectDescriptionHelpers
-import UtilityPlugin
 
 let frameworkName: String = "PresentationKit"
 
@@ -23,7 +22,7 @@ let frameworkTargets: [Target] = FrameworkFactory(
 ).build(
     payload: .init(
         name: frameworkName,
-        platform: .iOS,
+        destinations: .iOS,
         product: .framework
     )
 )
@@ -36,6 +35,6 @@ let project = ProjectFactory(
 ).build(
     payload: .init(
         name: frameworkName,
-        organizationName: "kr.byunghak"
+        organizationName: "kr.brody"
     )
 )

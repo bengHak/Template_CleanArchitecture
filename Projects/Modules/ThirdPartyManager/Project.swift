@@ -7,27 +7,20 @@
 
 import ProjectDescription
 import ProjectDescriptionHelpers
-import UtilityPlugin
 
 let frameworkName: String = "ThirdPartyManager"
 
 let frameworkTargets: [Target] = FrameworkFactory(
     dependency: .init(
         frameworkDependencies: [
-            .SPM.RxSwift,
-            .SPM.RxCocoa,
-            .SPM.Moya,
-            .SPM.RxMoya,
-            .SPM.Then,
-            .SPM.SnapKit,
-            .SPM.Kingfisher
+            .SPM.ComposableArchitecture,
         ],
         unitTestsDependencies: []
     )
 ).build(
     payload: .init(
         name: frameworkName,
-        platform: .iOS,
+        destinations: .iOS,
         product: .framework
     )
 )
@@ -40,6 +33,6 @@ let project = ProjectFactory(
 ).build(
     payload: .init(
         name: frameworkName,
-        organizationName: "kr.byunghak"
+        organizationName: "kr.brody"
     )
 )
